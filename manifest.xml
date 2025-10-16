@@ -5,9 +5,8 @@
   xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
   xsi:type="MailApp">
 
-  <!-- Unique ID -->
   <Id>8c1a0b2e-0dc2-4c7e-8427-02dfe3a831d7</Id>
-  <Version>1.0.0.3</Version>
+  <Version>1.0.0.4</Version>
   <ProviderName>Data#3</ProviderName>
   <DefaultLocale>en-AU</DefaultLocale>
   <DisplayName DefaultValue="HashFix on Send"/>
@@ -15,19 +14,19 @@
 
   <!-- Icons -->
   <IconUrl DefaultValue="https://markarobinson-pixel.github.io/hashfix/icon-32.png"/>
-  <HighResolutionIconUrl DefaultValue="https://markarobinson-pixel.github.io/hashfix/icon-32.png"/>
+  <HighResolutionIconUrl DefaultValue="https://markarobinson-pixel.github.io/hashfix/icon-64.png"/>
+
   <SupportUrl DefaultValue="https://markarobinson-pixel.github.io/hashfix/"/>
 
   <Hosts>
     <Host Name="Mailbox"/>
   </Hosts>
 
-  <!-- Declare external domains used by the add-in -->
+  <!-- Declare external origin used by the add-in -->
   <AppDomains>
     <AppDomain>https://markarobinson-pixel.github.io</AppDomain>
   </AppDomains>
 
-  <!-- Requirement set for on-send -->
   <Requirements>
     <Sets DefaultMinVersion="1.10">
       <Set Name="Mailbox"/>
@@ -36,7 +35,7 @@
 
   <Permissions>ReadWriteItem</Permissions>
 
-  <!-- Classic FormSettings with SourceLocation (some validators require this) -->
+  <!-- Classic SourceLocation to satisfy admin validator -->
   <FormSettings>
     <Form xsi:type="ItemRead">
       <DesktopSettings>
@@ -50,13 +49,13 @@
     </Form>
   </FormSettings>
 
-  <!-- A simple always-on rule for messages -->
+  <!-- Keep it simple: message scope -->
   <Rule xsi:type="RuleCollection" Mode="Or">
     <Rule xsi:type="ItemIs" ItemType="Message" FormType="Read"/>
     <Rule xsi:type="ItemIs" ItemType="Message" FormType="Edit"/>
   </Rule>
 
-  <!-- Modern on-send event wiring -->
+  <!-- Events-based on-send -->
   <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.1" xsi:type="VersionOverridesV1_1">
     <Requirements>
       <bt:Sets DefaultMinVersion="1.10">
@@ -93,3 +92,4 @@
     </Resources>
   </VersionOverrides>
 </OfficeApp>
+
