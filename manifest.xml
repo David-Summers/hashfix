@@ -5,20 +5,29 @@
   xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
   xsi:type="MailApp">
 
-  <Id>df9d3d64-a577-4183-bf06-52019ed4cc3c</Id>
-  <Version>1.0.0.0</Version>
+  <!-- Unique ID -->
+  <Id>8c1a0b2e-0dc2-4c7e-8427-02dfe3a831d7</Id>
+  <Version>1.0.0.3</Version>
   <ProviderName>Data#3</ProviderName>
   <DefaultLocale>en-AU</DefaultLocale>
   <DisplayName DefaultValue="HashFix on Send"/>
-  <Description DefaultValue="Superscripts '#' immediately before '3' in the email body. Existing superscripts remain unchanged."/>
+  <Description DefaultValue="Superscripts '#' immediately before '3' in the email body; existing &lt;sup&gt; entries are left unchanged."/>
+
+  <!-- Icons -->
   <IconUrl DefaultValue="https://markarobinson-pixel.github.io/hashfix/icon-32.png"/>
   <HighResolutionIconUrl DefaultValue="https://markarobinson-pixel.github.io/hashfix/icon-32.png"/>
-  <SupportUrl DefaultValue="https://markarobinson-pixel.github.io/hashfix"/>
+  <SupportUrl DefaultValue="https://markarobinson-pixel.github.io/hashfix/"/>
 
   <Hosts>
     <Host Name="Mailbox"/>
   </Hosts>
 
+  <!-- Declare external domains used by the add-in -->
+  <AppDomains>
+    <AppDomain>https://markarobinson-pixel.github.io</AppDomain>
+  </AppDomains>
+
+  <!-- Requirement set for on-send -->
   <Requirements>
     <Sets DefaultMinVersion="1.10">
       <Set Name="Mailbox"/>
@@ -27,7 +36,27 @@
 
   <Permissions>ReadWriteItem</Permissions>
 
-  <!-- VersionOverrides for on-send event -->
+  <!-- Classic FormSettings with SourceLocation (some validators require this) -->
+  <FormSettings>
+    <Form xsi:type="ItemRead">
+      <DesktopSettings>
+        <SourceLocation DefaultValue="https://markarobinson-pixel.github.io/hashfix/functions.html"/>
+      </DesktopSettings>
+    </Form>
+    <Form xsi:type="ItemEdit">
+      <DesktopSettings>
+        <SourceLocation DefaultValue="https://markarobinson-pixel.github.io/hashfix/functions.html"/>
+      </DesktopSettings>
+    </Form>
+  </FormSettings>
+
+  <!-- A simple always-on rule for messages -->
+  <Rule xsi:type="RuleCollection" Mode="Or">
+    <Rule xsi:type="ItemIs" ItemType="Message" FormType="Read"/>
+    <Rule xsi:type="ItemIs" ItemType="Message" FormType="Edit"/>
+  </Rule>
+
+  <!-- Modern on-send event wiring -->
   <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.1" xsi:type="VersionOverridesV1_1">
     <Requirements>
       <bt:Sets DefaultMinVersion="1.10">
@@ -36,10 +65,13 @@
     </Requirements>
     <Hosts>
       <Host xsi:type="MailHost">
+        <Runtimes>
+          <Runtime resid="Functions.Url" lifetime="long"/>
+        </Runtimes>
         <DesktopFormFactor>
           <FunctionFile resid="Functions.Url"/>
           <ExtensionPoint xsi:type="Events">
-            <Event Type="ItemSend" FunctionName="onMessageSend"/>
+            <Event Type="ItemSend" FunctionExecution="synchronous" FunctionName="onMessageSend"/>
           </ExtensionPoint>
         </DesktopFormFactor>
       </Host>
@@ -56,7 +88,7 @@
         <bt:String id="residDisplayName" DefaultValue="HashFix on Send"/>
       </bt:ShortStrings>
       <bt:LongStrings>
-        <bt:String id="residDescription" DefaultValue="Superscripts '#' before '3' at send time."/>
+        <bt:String id="residDescription" DefaultValue="Superscripts '#' immediately before '3' on send."/>
       </bt:LongStrings>
     </Resources>
   </VersionOverrides>
