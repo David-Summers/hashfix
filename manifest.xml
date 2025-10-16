@@ -2,94 +2,84 @@
 <OfficeApp
   xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:ov="http://schemas.microsoft.com/office/mailappversionoverrides/1.1"
   xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
   xsi:type="MailApp">
 
-  <Id>8c1a0b2e-0dc2-4c7e-8427-02dfe3a831d7</Id>
-  <Version>1.0.0.4</Version>
-  <ProviderName>Data#3</ProviderName>
+  <!-- Identity -->
+  <Id>3b2e0b2b-7a29-4c7e-9f7a-4b9b0c6c4d21</Id> <!-- NEW GUID for fresh install -->
+  <Version>1.0.0.0</Version>
+  <ProviderName>Mark Robinson</ProviderName>
   <DefaultLocale>en-AU</DefaultLocale>
-  <DisplayName DefaultValue="HashFix on Send"/>
-  <Description DefaultValue="Superscripts '#' immediately before '3' in the email body; existing &lt;sup&gt; entries are left unchanged."/>
 
-  <!-- Icons -->
+  <!-- Strings -->
+  <DisplayName DefaultValue="HashFix On-Send Add-in"/>
+  <Description DefaultValue="Runs policy checks and formatting fixes when you press Send." />
+
+  <!-- Icons (32 & 64 only) -->
   <IconUrl DefaultValue="https://markarobinson-pixel.github.io/hashfix/icon-32.png"/>
   <HighResolutionIconUrl DefaultValue="https://markarobinson-pixel.github.io/hashfix/icon-64.png"/>
 
-  <SupportUrl DefaultValue="https://markarobinson-pixel.github.io/hashfix/"/>
+  <!-- Permissions required for OnMessageSend -->
+  <Permissions>ReadWriteMailbox</Permissions>
+  <SupportsPinning>false</SupportsPinning>
 
-  <Hosts>
-    <Host Name="Mailbox"/>
-  </Hosts>
+  <!-- Requirements -->
+  <Requirements>
+    <Sets DefaultMinVersion="1.10">
+      <Set Name="Mailbox" MinVersion="1.10"/>
+    </Sets>
+  </Requirements>
 
-  <!-- Declare external origin used by the add-in -->
+  <!-- Allow resources from your GitHub Pages origin -->
   <AppDomains>
     <AppDomain>https://markarobinson-pixel.github.io</AppDomain>
   </AppDomains>
 
-  <Requirements>
-    <Sets DefaultMinVersion="1.10">
-      <Set Name="Mailbox"/>
-    </Sets>
-  </Requirements>
-
-  <Permissions>ReadWriteItem</Permissions>
-
-  <!-- Classic SourceLocation to satisfy admin validator -->
-  <FormSettings>
-    <Form xsi:type="ItemRead">
-      <DesktopSettings>
-        <SourceLocation DefaultValue="https://markarobinson-pixel.github.io/hashfix/functions.html"/>
-      </DesktopSettings>
-    </Form>
-    <Form xsi:type="ItemEdit">
-      <DesktopSettings>
-        <SourceLocation DefaultValue="https://markarobinson-pixel.github.io/hashfix/functions.html"/>
-      </DesktopSettings>
-    </Form>
-  </FormSettings>
-
-  <!-- Keep it simple: message scope -->
-  <Rule xsi:type="RuleCollection" Mode="Or">
-    <Rule xsi:type="ItemIs" ItemType="Message" FormType="Read"/>
-    <Rule xsi:type="ItemIs" ItemType="Message" FormType="Edit"/>
-  </Rule>
-
-  <!-- Events-based on-send -->
-  <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.1" xsi:type="VersionOverridesV1_1">
-    <Requirements>
-      <bt:Sets DefaultMinVersion="1.10">
-        <bt:Set Name="Mailbox"/>
-      </bt:Sets>
-    </Requirements>
+  <!-- Event-based add-in config -->
+  <VersionOverrides xsi:type="ov:VersionOverridesV1_1">
     <Hosts>
-      <Host xsi:type="MailHost">
+      <Host xsi:type="ov:Mailbox">
+
+        <!-- Use your existing functions.html as the runtime page -->
         <Runtimes>
           <Runtime resid="Functions.Url" lifetime="long"/>
         </Runtimes>
-        <DesktopFormFactor>
-          <FunctionFile resid="Functions.Url"/>
-          <ExtensionPoint xsi:type="Events">
-            <Event Type="ItemSend" FunctionExecution="synchronous" FunctionName="onMessageSend"/>
+
+        <ExtensionPoints>
+          <!-- On Send handler -->
+          <ExtensionPoint xsi:type="ov:LaunchEvent">
+            <LaunchEvents>
+              <LaunchEvent Type="OnMessageSend" FunctionName="onMessageSendHandler"/>
+            </LaunchEvents>
+            <SourceLocation resid="Functions.Url"/>
           </ExtensionPoint>
-        </DesktopFormFactor>
+        </ExtensionPoints>
+
       </Host>
     </Hosts>
+
     <Resources>
-      <bt:Urls>
-        <bt:Url id="Functions.Url" DefaultValue="https://markarobinson-pixel.github.io/hashfix/functions.html"/>
-      </bt:Urls>
       <bt:Images>
-        <bt:Image id="Icon16" DefaultValue="https://markarobinson-pixel.github.io/hashfix/icon-16.png"/>
         <bt:Image id="Icon32" DefaultValue="https://markarobinson-pixel.github.io/hashfix/icon-32.png"/>
+        <bt:Image id="Icon64" DefaultValue="https://markarobinson-pixel.github.io/hashfix/icon-64.png"/>
       </bt:Images>
+
+      <bt:Urls>
+        <!-- Point directly to your existing file -->
+        <bt:Url id="Functions.Url" DefaultValue="https://markarobinson-pixel.github.io/hashfix/functions.html"/>
+        <!-- Optional links (create later if you want) -->
+        <bt:Url id="Support.Url"  DefaultValue="https://markarobinson-pixel.github.io/hashfix/support.html"/>
+        <bt:Url id="Privacy.Url"  DefaultValue="https://markarobinson-pixel.github.io/hashfix/privacy.html"/>
+        <bt:Url id="Terms.Url"    DefaultValue="https://markarobinson-pixel.github.io/hashfix/terms.html"/>
+      </bt:Urls>
+
       <bt:ShortStrings>
-        <bt:String id="residDisplayName" DefaultValue="HashFix on Send"/>
+        <bt:String id="App.DisplayName" DefaultValue="HashFix On-Send"/>
       </bt:ShortStrings>
       <bt:LongStrings>
-        <bt:String id="residDescription" DefaultValue="Superscripts '#' immediately before '3' on send."/>
+        <bt:String id="App.Description" DefaultValue="Runs policy checks and formatting fixes when you press Send."/>
       </bt:LongStrings>
     </Resources>
   </VersionOverrides>
 </OfficeApp>
-
