@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OfficeApp
+  xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
+  xsi:type="MailApp">
+
+  <Id>df9d3d64-a577-4183-bf06-52019ed4cc3c</Id>
+  <Version>1.0.0.0</Version>
+  <ProviderName>Data#3</ProviderName>
+  <DefaultLocale>en-AU</DefaultLocale>
+  <DisplayName DefaultValue="HashFix on Send"/>
+  <Description DefaultValue="Superscripts '#' immediately before '3' in the email body. Existing superscripts remain unchanged."/>
+  <IconUrl DefaultValue="https://markarobinson-pixel.github.io/hashfix/icon-32.png"/>
+  <HighResolutionIconUrl DefaultValue="https://markarobinson-pixel.github.io/hashfix/icon-32.png"/>
+  <SupportUrl DefaultValue="https://markarobinson-pixel.github.io/hashfix"/>
+
+  <Hosts>
+    <Host Name="Mailbox"/>
+  </Hosts>
+
+  <Requirements>
+    <Sets DefaultMinVersion="1.10">
+      <Set Name="Mailbox"/>
+    </Sets>
+  </Requirements>
+
+  <Permissions>ReadWriteItem</Permissions>
+
+  <!-- VersionOverrides for on-send event -->
+  <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.1" xsi:type="VersionOverridesV1_1">
+    <Requirements>
+      <bt:Sets DefaultMinVersion="1.10">
+        <bt:Set Name="Mailbox"/>
+      </bt:Sets>
+    </Requirements>
+    <Hosts>
+      <Host xsi:type="MailHost">
+        <DesktopFormFactor>
+          <FunctionFile resid="Functions.Url"/>
+          <ExtensionPoint xsi:type="Events">
+            <Event Type="ItemSend" FunctionName="onMessageSend"/>
+          </ExtensionPoint>
+        </DesktopFormFactor>
+      </Host>
+    </Hosts>
+    <Resources>
+      <bt:Urls>
+        <bt:Url id="Functions.Url" DefaultValue="https://markarobinson-pixel.github.io/hashfix/functions.html"/>
+      </bt:Urls>
+      <bt:Images>
+        <bt:Image id="Icon16" DefaultValue="https://markarobinson-pixel.github.io/hashfix/icon-16.png"/>
+        <bt:Image id="Icon32" DefaultValue="https://markarobinson-pixel.github.io/hashfix/icon-32.png"/>
+      </bt:Images>
+      <bt:ShortStrings>
+        <bt:String id="residDisplayName" DefaultValue="HashFix on Send"/>
+      </bt:ShortStrings>
+      <bt:LongStrings>
+        <bt:String id="residDescription" DefaultValue="Superscripts '#' before '3' at send time."/>
+      </bt:LongStrings>
+    </Resources>
+  </VersionOverrides>
+</OfficeApp>
