@@ -39,7 +39,7 @@ HashFix is an event-based Outlook add-in that intercepts emails when you click "
 5. Click **My add-ins** → **Add a custom add-in** → **Add from URL**
 6. Enter the manifest URL:
    ```
-   https://markarobinson-pixel.github.io/hashfix/manifest.xml
+   https://David-Summers.github.io/hashfix/manifest.xml
    ```
 7. Click **Install**
 
@@ -51,7 +51,7 @@ HashFix is an event-based Outlook add-in that intercepts emails when you click "
 4. Click **Add a custom add-in** → **Add from URL**
 5. Enter the manifest URL:
    ```
-   https://markarobinson-pixel.github.io/hashfix/manifest.xml
+   https://David-Summers.github.io/hashfix/manifest.xml
    ```
 6. Click **OK** and restart Outlook
 
@@ -183,7 +183,7 @@ HashFix processes your email content **locally in the browser**. No email conten
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/markarobinson-pixel/hashfix.git
+   git clone https://github.com/David-Summers/hashfix.git
    cd hashfix
    ```
 
@@ -255,8 +255,8 @@ Contributions are welcome! Please:
 
 For help, bug reports, or feature requests:
 
-- **GitHub Issues**: [github.com/markarobinson-pixel/hashfix/issues](https://github.com/markarobinson-pixel/hashfix/issues)
-- **Documentation**: [support.html](https://markarobinson-pixel.github.io/hashfix/support.html)
+- **GitHub Issues**: [github.com/David-Summers/hashfix/issues](https://github.com/David-Summers/hashfix/issues)
+- **Documentation**: [support.html](https://David-Summers.github.io/hashfix/support.html)
 - **Author**: Mark Robinson
 
 ## Version History
@@ -282,4 +282,4 @@ MIT License - See LICENSE file for details
 
 **Made with care by Mark Robinson**
 
-For more information, visit the [GitHub repository](https://github.com/markarobinson-pixel/hashfix).
+For more information, visit the [GitHub repository](https://github.com/David-Summers/hashfix).

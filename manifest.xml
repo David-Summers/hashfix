@@ -17,15 +17,15 @@
   <Description DefaultValue="Runs policy checks and formatting fixes when you press Send."/>
 
   <!-- Icons -->
-  <IconUrl DefaultValue="https://markarobinson-pixel.github.io/hashfix/icon-32.png"/>
-  <HighResolutionIconUrl DefaultValue="https://markarobinson-pixel.github.io/hashfix/icon-64.png"/>
+  <IconUrl DefaultValue="https://David-Summers.github.io/hashfix/icon-32.png"/>
+  <HighResolutionIconUrl DefaultValue="https://David-Summers.github.io/hashfix/icon-64.png"/>
 
   <!-- Support (must appear before Permissions in this schema) -->
-  <SupportUrl DefaultValue="https://markarobinson-pixel.github.io/hashfix/support.html"/>
+  <SupportUrl DefaultValue="https://David-Summers.github.io/hashfix/support.html"/>
 
   <!-- AppDomains, Hosts, Requirements must precede Permissions -->
   <AppDomains>
-    <AppDomain>https://markarobinson-pixel.github.io</AppDomain>
+    <AppDomain>https://David-Summers.github.io</AppDomain>
   </AppDomains>
 
   <Hosts>
@@ -42,7 +42,7 @@
   <FormSettings>
     <Form xsi:type="ItemRead">
       <DesktopSettings>
-        <SourceLocation DefaultValue="https://markarobinson-pixel.github.io/hashfix/taskpane.html"/>
+        <SourceLocation DefaultValue="https://David-Summers.github.io/hashfix/taskpane.html"/>
         <RequestedHeight>250</RequestedHeight>
       </DesktopSettings>
     </Form>
@@ -118,14 +118,14 @@
       <!-- Resources -->
       <Resources>
         <bt:Images>
-          <bt:Image id="Icon32" DefaultValue="https://markarobinson-pixel.github.io/hashfix/icon-32.png"/>
-          <bt:Image id="Icon64" DefaultValue="https://markarobinson-pixel.github.io/hashfix/icon-64.png"/>
+          <bt:Image id="Icon32" DefaultValue="https://David-Summers.github.io/hashfix/icon-32.png"/>
+          <bt:Image id="Icon64" DefaultValue="https://David-Summers.github.io/hashfix/icon-64.png"/>
         </bt:Images>
 
         <bt:Urls>
-          <bt:Url id="Taskpane.Url"        DefaultValue="https://markarobinson-pixel.github.io/hashfix/taskpane.html"/>
-          <bt:Url id="Functions.Url"       DefaultValue="https://markarobinson-pixel.github.io/hashfix/functions.html"/>
-          <bt:Url id="Support.Url"         DefaultValue="https://markarobinson-pixel.github.io/hashfix/support.html"/>
+          <bt:Url id="Taskpane.Url"        DefaultValue="https://David-Summers.github.io/hashfix/taskpane.html"/>
+          <bt:Url id="Functions.Url"       DefaultValue="https://David-Summers.github.io/hashfix/functions.html"/>
+          <bt:Url id="Support.Url"         DefaultValue="https://David-Summers.github.io/hashfix/support.html"/>
         </bt:Urls>
 
         <bt:ShortStrings>

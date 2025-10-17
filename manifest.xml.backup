@@ -17,8 +17,8 @@
   <Description DefaultValue="Runs policy checks and formatting fixes when you press Send." />
 
   <!-- Icons (32 & 64 only) -->
-  <IconUrl DefaultValue="https://markarobinson-pixel.github.io/hashfix/icon-32.png"/>
-  <HighResolutionIconUrl DefaultValue="https://markarobinson-pixel.github.io/hashfix/icon-64.png"/>
+  <IconUrl DefaultValue="https://David-Summers.github.io/hashfix/icon-32.png"/>
+  <HighResolutionIconUrl DefaultValue="https://David-Summers.github.io/hashfix/icon-64.png"/>
 
   <!-- Permissions required for OnMessageSend -->
   <Permissions>ReadWriteMailbox</Permissions>
@@ -33,7 +33,7 @@
 
   <!-- Allow resources from your GitHub Pages origin -->
   <AppDomains>
-    <AppDomain>https://markarobinson-pixel.github.io</AppDomain>
+    <AppDomain>https://David-Summers.github.io</AppDomain>
   </AppDomains>
 
   <!-- Event-based add-in config -->
@@ -61,17 +61,17 @@
 
     <Resources>
       <bt:Images>
-        <bt:Image id="Icon32" DefaultValue="https://markarobinson-pixel.github.io/hashfix/icon-32.png"/>
-        <bt:Image id="Icon64" DefaultValue="https://markarobinson-pixel.github.io/hashfix/icon-64.png"/>
+        <bt:Image id="Icon32" DefaultValue="https://David-Summers.github.io/hashfix/icon-32.png"/>
+        <bt:Image id="Icon64" DefaultValue="https://David-Summers.github.io/hashfix/icon-64.png"/>
       </bt:Images>
 
       <bt:Urls>
         <!-- Point directly to your existing file -->
-        <bt:Url id="Functions.Url" DefaultValue="https://markarobinson-pixel.github.io/hashfix/functions.html"/>
+        <bt:Url id="Functions.Url" DefaultValue="https://David-Summers.github.io/hashfix/functions.html"/>
         <!-- Optional links (create later if you want) -->
-        <bt:Url id="Support.Url"  DefaultValue="https://markarobinson-pixel.github.io/hashfix/support.html"/>
-        <bt:Url id="Privacy.Url"  DefaultValue="https://markarobinson-pixel.github.io/hashfix/privacy.html"/>
-        <bt:Url id="Terms.Url"    DefaultValue="https://markarobinson-pixel.github.io/hashfix/terms.html"/>
+        <bt:Url id="Support.Url"  DefaultValue="https://David-Summers.github.io/hashfix/support.html"/>
+        <bt:Url id="Privacy.Url"  DefaultValue="https://David-Summers.github.io/hashfix/privacy.html"/>
+        <bt:Url id="Terms.Url"    DefaultValue="https://David-Summers.github.io/hashfix/terms.html"/>
       </bt:Urls>
 
       <bt:ShortStrings>
