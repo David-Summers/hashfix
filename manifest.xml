@@ -80,7 +80,7 @@
             <!-- FunctionFile is allowed at this level -->
             <FunctionFile resid="Functions.Url"/>
 
-            <!-- Optional ribbon button (can be removed if you want zero UI) -->
+            <!-- Ribbon button for message compose -->
             <ExtensionPoint xsi:type="MessageComposeCommandSurface">
               <OfficeTab id="TabDefault">
                 <Group id="msgComposeGroup">
@@ -92,8 +92,9 @@
                       <Description resid="SupertipDescription"/>
                     </Supertip>
                     <Icon>
+                      <bt:Image size="16" resid="Icon16"/>
                       <bt:Image size="32" resid="Icon32"/>
-                      <bt:Image size="64" resid="Icon64"/>
+                      <bt:Image size="80" resid="Icon80"/>
                     </Icon>
                     <Action xsi:type="ShowTaskpane">
                       <SourceLocation resid="Taskpane.Url"/>
@@ -103,7 +104,31 @@
               </OfficeTab>
             </ExtensionPoint>
 
-            <!-- LaunchEvent now includes the required SourceLocation -->
+            <!-- Ribbon button for message read -->
+            <ExtensionPoint xsi:type="MessageReadCommandSurface">
+              <OfficeTab id="TabDefault">
+                <Group id="msgReadGroup">
+                  <Label resid="GroupLabel"/>
+                  <Control xsi:type="Button" id="msgReadOpenPaneButton">
+                    <Label resid="ButtonLabel"/>
+                    <Supertip>
+                      <Title resid="SupertipTitle"/>
+                      <Description resid="SupertipDescription"/>
+                    </Supertip>
+                    <Icon>
+                      <bt:Image size="16" resid="Icon16"/>
+                      <bt:Image size="32" resid="Icon32"/>
+                      <bt:Image size="80" resid="Icon80"/>
+                    </Icon>
+                    <Action xsi:type="ShowTaskpane">
+                      <SourceLocation resid="Taskpane.Url"/>
+                    </Action>
+                  </Control>
+                </Group>
+              </OfficeTab>
+            </ExtensionPoint>
+
+            <!-- OnSend event handler -->
             <ExtensionPoint xsi:type="LaunchEvent">
               <LaunchEvents>
                 <LaunchEvent Type="OnMessageSend" FunctionName="onMessageSendHandler" SendMode="SoftBlock"/>
@@ -118,25 +143,28 @@
       <!-- Resources -->
       <Resources>
         <bt:Images>
+          <bt:Image id="Icon16" DefaultValue="https://David-Summers.github.io/hashfix/icon-16.png"/>
           <bt:Image id="Icon32" DefaultValue="https://David-Summers.github.io/hashfix/icon-32.png"/>
           <bt:Image id="Icon64" DefaultValue="https://David-Summers.github.io/hashfix/icon-64.png"/>
+          <bt:Image id="Icon80" DefaultValue="https://David-Summers.github.io/hashfix/icon-80.png"/>
         </bt:Images>
 
         <bt:Urls>
-          <bt:Url id="Taskpane.Url"        DefaultValue="https://David-Summers.github.io/hashfix/taskpane.html"/>
-          <bt:Url id="Functions.Url"       DefaultValue="https://David-Summers.github.io/hashfix/functions.html"/>
-          <bt:Url id="Support.Url"         DefaultValue="https://David-Summers.github.io/hashfix/support.html"/>
+          <bt:Url id="Taskpane.Url"  DefaultValue="https://David-Summers.github.io/hashfix/taskpane.html"/>
+          <bt:Url id="Functions.Url" DefaultValue="https://David-Summers.github.io/hashfix/functions.html"/>
+          <bt:Url id="Support.Url"   DefaultValue="https://David-Summers.github.io/hashfix/support.html"/>
         </bt:Urls>
 
         <bt:ShortStrings>
-          <bt:String id="GroupLabel"         DefaultValue="HashFix"/>
-          <bt:String id="ButtonLabel"        DefaultValue="Open HashFix"/>
-          <bt:String id="SupertipTitle"      DefaultValue="HashFix"/>
-          <bt:String id="SupertipDescription" DefaultValue="Opens the HashFix taskpane for email processing."/>
-          <bt:String id="App.Description"    DefaultValue="Runs policy checks and formatting fixes when you press Send."/>
+          <bt:String id="GroupLabel"          DefaultValue="HashFix"/>
+          <bt:String id="ButtonLabel"         DefaultValue="Open HashFix"/>
+          <bt:String id="SupertipTitle"       DefaultValue="HashFix"/>
+          <bt:String id="App.Description"     DefaultValue="Automatic hashtag formatting"/>
         </bt:ShortStrings>
 
-        <bt:LongStrings/>
+        <bt:LongStrings>
+          <bt:String id="SupertipDescription" DefaultValue="Opens the HashFix taskpane to view automatic hashtag formatting activity and statistics for your emails."/>
+        </bt:LongStrings>
       </Resources>
     </VersionOverrides>
   </VersionOverrides>
