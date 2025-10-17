@@ -1,74 +1,69 @@
+
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
   <title>HashFix Functions</title>
   <script type="text/javascript" src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
 </head>
 <body>
-<script>
-  // Initialize Office
-  Office.onReady(() => {
-    console.log("HashFix: Office.js loaded");
+  <script>
+    // Legacy initialization fallback
+    Office.initialize = () => {
+      console.log("HashFix: Office initialized (legacy)");
+    };
 
-    // Associate the OnSend handler
-    if (Office.actions && Office.actions.associate) {
-      Office.actions.associate("onMessageSendHandler", onMessageSendHandler);
-      console.log("HashFix: Handler associated");
-    }
-  });
+    // Modern Office.js readiness
+    Office.onReady(() => {
+      console.log("HashFix: Office.js loaded");
 
-  /**
-   * OnMessageSend Event Handler
-   * Fixes hashtag formatting before sending emails
-   */
-  function onMessageSendHandler(event) {
-    console.log("HashFix: onMessageSendHandler triggered");
-
-    const item = Office.context.mailbox.item;
-
-    // Get email body
-    item.body.getAsync(Office.CoercionType.Text, function(result) {
-      if (result.status === Office.AsyncResultStatus.Failed) {
-        console.error("HashFix: Failed to get body", result.error);
-        event.completed({ allowEvent: true });
-        return;
-      }
-
-      const originalText = result.value;
-      const fixedText = fixHashtagsSimple(originalText);
-
-      // Only update if changes were made
-      if (fixedText !== originalText) {
-        item.body.setAsync(fixedText, { coercionType: Office.CoercionType.Text }, function(setResult) {
-          if (setResult.status === Office.AsyncResultStatus.Succeeded) {
-            console.log("HashFix: Hashtags corrected");
-          } else {
-            console.error("HashFix: Failed to set body", setResult.error);
-          }
-          event.completed({ allowEvent: true });
-        });
-      } else {
-        console.log("HashFix: No changes needed");
-        event.completed({ allowEvent: true });
+      if (Office.actions && Office.actions.associate) {
+        Office.actions.associate("onMessageSendHandler", onMessageSendHandler);
+        console.log("HashFix: Handler associated");
       }
     });
-  }
 
-  /**
-   * Simple hashtag fixing using regex
-   * Fixes: "# tag" -> "#tag", "#  tag" -> "#tag", etc.
-   */
-  function fixHashtagsSimple(text) {
-    // Replace # followed by one or more spaces with just #
-    return text.replace(/#\s+(\w+)/g, '#$1');
-  }
+    // OnMessageSend handler
+    function onMessageSendHandler(event) {
+      console.log("HashFix: onMessageSendHandler triggered");
 
-  // Make function globally accessible
-  window.onMessageSendHandler = onMessageSendHandler;
+      const item = Office.context.mailbox.item;
 
-  console.log("HashFix: Functions loaded");
-</script>
+      item.body.getAsync(Office.CoercionType.Text, function(result) {
+        if (result.status === Office.AsyncResultStatus.Failed) {
+          console.error("HashFix: Failed to get body", result.error);
+          event.completed({ allowEvent: true });
+          return;
+        }
+
+        const originalText = result.value;
+        const fixedText = fixHashtagsSimple(originalText);
+
+        if (fixedText !== originalText) {
+          item.body.setAsync(fixedText, { coercionType: Office.CoercionType.Text }, function(setResult) {
+            if (setResult.status === Office.AsyncResultStatus.Succeeded) {
+              console.log("HashFix: Hashtags corrected");
+            } else {
+              console.error("HashFix: Failed to set body", setResult.error);
+            }
+            event.completed({ allowEvent: true });
+          });
+        } else {
+          console.log("HashFix: No changes needed");
+          event.completed({ allowEvent: true });
+        }
+      });
+    }
+
+    // Regex-based hashtag fixer
+    function fixHashtagsSimple(text) {
+      return text.replace(/#\s+(\w+)/g, '#$1');
+    }
+
+    // Global exposure
+    window.onMessageSendHandler = onMessageSendHandler;
+    console.log("HashFix: Functions loaded");
+  </script>
 </body>
 </html>
