@@ -39,9 +39,6 @@
     </Sets>
   </Requirements>
 
-  <!-- Permissions -->
-  <Permissions>ReadWriteMailbox</Permissions>
-
   <!-- Form Settings -->
   <FormSettings>
     <Form xsi:type="ItemRead">
@@ -53,10 +50,12 @@
     <Form xsi:type="ItemEdit">
       <DesktopSettings>
         <SourceLocation DefaultValue="https://David-Summers.github.io/hashfix/taskpane.html"/>
-        <RequestedHeight>250</RequestedHeight>
       </DesktopSettings>
     </Form>
   </FormSettings>
+
+  <!-- Permissions -->
+  <Permissions>ReadWriteMailbox</Permissions>
 
   <!-- Activation Rule -->
   <Rule xsi:type="RuleCollection" Mode="Or">
@@ -67,7 +66,8 @@
   <DisableEntityHighlighting>true</DisableEntityHighlighting>
 
   <!-- Version Overrides for Modern Outlook -->
-  <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.1" xsi:type="VersionOverridesV1_1">
+  <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides" xsi:type="VersionOverridesV1_0">
+    <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.1" xsi:type="VersionOverridesV1_1">
 
     <Description resid="residAppDescription"/>
 
@@ -171,6 +171,7 @@
       </bt:LongStrings>
     </Resources>
 
+    </VersionOverrides>
   </VersionOverrides>
 
 </OfficeApp>
