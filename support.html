@@ -187,26 +187,78 @@
 
         <h2>Installation</h2>
 
-        <h3>For Outlook on the Web (Easiest)</h3>
+        <h3>Method 1: Outlook on the Web (Office 365)</h3>
+
+        <h4>New Outlook Web (Current UI)</h4>
         <ol>
-            <li>Open Outlook in your web browser</li>
-            <li>Click the Settings gear icon</li>
-            <li>Select "View all Outlook settings"</li>
-            <li>Go to "Mail" → "Customize actions" → "Get Add-ins"</li>
-            <li>Click "My add-ins" → "Add a custom add-in" → "Add from URL"</li>
-            <li>Enter: <code>https://David-Summers.github.io/hashfix/manifest.xml</code></li>
-            <li>Click "Install"</li>
+            <li>Go to <a href="https://outlook.office.com">Outlook on the web</a> and sign in</li>
+            <li>Click the <strong>Apps</strong> icon (waffle/grid icon) in the left sidebar</li>
+            <li>Click <strong>Get Add-ins</strong> (or search for it)</li>
+            <li>Select <strong>My add-ins</strong> tab on the left</li>
+            <li>Scroll down and click <strong>➕ Add a custom add-in</strong> → <strong>Add from file</strong></li>
+            <li>Download the manifest file: <a href="https://David-Summers.github.io/hashfix/manifest.xml">manifest.xml</a></li>
+            <li>Click <strong>Browse</strong> and select the downloaded manifest.xml file</li>
+            <li>Click <strong>Upload</strong> and accept the warning</li>
+            <li>The add-in will appear in the ribbon when composing emails</li>
         </ol>
 
-        <h3>For Outlook Desktop (Windows)</h3>
+        <h4>Classic Outlook Web (Older UI)</h4>
         <ol>
-            <li>Open Outlook</li>
-            <li>Go to "File" → "Get Add-ins"</li>
-            <li>Select "My add-ins"</li>
-            <li>Click "Add a custom add-in" → "Add from URL"</li>
-            <li>Enter: <code>https://David-Summers.github.io/hashfix/manifest.xml</code></li>
-            <li>Click "OK" and restart Outlook</li>
+            <li>Go to <a href="https://outlook.office.com">Outlook on the web</a></li>
+            <li>Click the <strong>Settings</strong> gear icon (top right)</li>
+            <li>Search for "add-ins" or go to <strong>View all Outlook settings</strong> → <strong>General</strong> → <strong>Manage add-ins</strong></li>
+            <li>Click <strong>My add-ins</strong> (left panel)</li>
+            <li>Under <strong>Custom add-ins</strong>, click <strong>➕ Add a custom add-in</strong> → <strong>Add from file</strong></li>
+            <li>Download and upload the manifest.xml file</li>
+            <li>Accept the warning and click <strong>Install</strong></li>
         </ol>
+
+        <h3>Method 2: New Outlook for Windows (Microsoft 365)</h3>
+        <ol>
+            <li>Open <strong>New Outlook</strong> (toggle in top-right corner if in classic Outlook)</li>
+            <li>Click <strong>Apps</strong> in the left navigation bar</li>
+            <li>Click <strong>Get Add-ins</strong></li>
+            <li>Select <strong>My add-ins</strong> tab</li>
+            <li>Click <strong>➕ Add a custom add-in</strong> → <strong>Add from file</strong></li>
+            <li>Download manifest.xml from the repository</li>
+            <li>Browse to the file and click <strong>Upload</strong></li>
+            <li>Restart Outlook</li>
+        </ol>
+
+        <h3>Method 3: Classic Outlook Desktop (Windows)</h3>
+        <ol>
+            <li>Open <strong>Outlook Desktop</strong></li>
+            <li>Go to <strong>Home</strong> tab → <strong>Get Add-ins</strong> (or <strong>Store</strong>)</li>
+            <li>Click <strong>My add-ins</strong> in the left panel</li>
+            <li>Click <strong>➕ Add a custom add-in</strong> → <strong>Add from file</strong>
+                <ul>
+                    <li>If you see "Add from URL", you can use: <code>https://David-Summers.github.io/hashfix/manifest.xml</code></li>
+                </ul>
+            </li>
+            <li>Browse to the downloaded manifest.xml file</li>
+            <li>Click <strong>Install</strong></li>
+            <li>Restart Outlook</li>
+        </ol>
+
+        <h3>Method 4: Outlook for Mac</h3>
+        <ol>
+            <li>Download the manifest.xml file from: <a href="https://David-Summers.github.io/hashfix/manifest.xml">manifest.xml</a></li>
+            <li>Open <strong>Finder</strong> and press <strong>Cmd+Shift+G</strong> (Go to Folder)</li>
+            <li>Paste this path: <code>~/Library/Containers/com.microsoft.Outlook/Data/Documents/wef</code></li>
+            <li>Create the <code>wef</code> folder if it doesn't exist</li>
+            <li>Copy manifest.xml into the wef folder</li>
+            <li>Restart Outlook</li>
+        </ol>
+
+        <h3>Download Manifest File</h3>
+        <p>
+            You can download the manifest file directly from:<br>
+            <code>https://David-Summers.github.io/hashfix/manifest.xml</code>
+        </p>
+        <p>
+            Right-click and "Save as" or use curl/wget:
+        </p>
+        <pre style="background: #f4f4f4; padding: 10px; border-radius: 4px;">curl -O https://David-Summers.github.io/hashfix/manifest.xml</pre>
 
         <div class="info-box">
             <strong>Note:</strong> HashFix requires Outlook Mailbox API version 1.10 or higher.

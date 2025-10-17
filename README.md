@@ -30,40 +30,87 @@ HashFix is an event-based Outlook add-in that intercepts emails when you click "
 
 ## Installation
 
-### For Outlook on the Web (Easiest Method)
+### Method 1: Outlook on the Web (Office 365)
 
-1. Open [Outlook on the web](https://outlook.office.com)
-2. Click the **Settings** gear icon
-3. Select **View all Outlook settings**
-4. Navigate to **Mail** → **Customize actions** → **Get Add-ins**
-5. Click **My add-ins** → **Add a custom add-in** → **Add from URL**
-6. Enter the manifest URL:
-   ```
-   https://David-Summers.github.io/hashfix/manifest.xml
-   ```
-7. Click **Install**
+#### New Outlook Web (Current UI)
+1. Go to [Outlook on the web](https://outlook.office.com) and sign in
+2. Click the **Apps** icon (waffle/grid icon) in the left sidebar
+3. Click **Get Add-ins** (or search for it)
+4. Select **My add-ins** tab on the left
+5. Scroll down and click **➕ Add a custom add-in** → **Add from file**
+6. Download `manifest.xml` from: https://David-Summers.github.io/hashfix/manifest.xml
+7. Click **Browse** and select the downloaded `manifest.xml` file
+8. Click **Upload** and accept the warning
+9. The add-in will appear in the ribbon when composing emails
 
-### For Outlook Desktop (Windows)
+#### Classic Outlook Web (Older UI)
+1. Go to [Outlook on the web](https://outlook.office.com)
+2. Click the **Settings** gear icon (top right)
+3. Search for "add-ins" or go to **View all Outlook settings** → **General** → **Manage add-ins**
+4. Click **My add-ins** (left panel)
+5. Under **Custom add-ins**, click **➕ Add a custom add-in** → **Add from file**
+6. Download and upload the `manifest.xml` file
+7. Accept the warning and click **Install**
 
-1. Open **Outlook**
-2. Go to **File** → **Get Add-ins**
-3. Select **My add-ins**
-4. Click **Add a custom add-in** → **Add from URL**
-5. Enter the manifest URL:
-   ```
-   https://David-Summers.github.io/hashfix/manifest.xml
-   ```
-6. Click **OK** and restart Outlook
+### Method 2: New Outlook for Windows (Microsoft 365)
 
-### For Outlook Desktop (Mac)
+1. Open **New Outlook** (toggle in top-right corner if in classic Outlook)
+2. Click **Apps** in the left navigation bar
+3. Click **Get Add-ins**
+4. Select **My add-ins** tab
+5. Click **➕ Add a custom add-in** → **Add from file**
+6. Download `manifest.xml` from the repository
+7. Browse to the file and click **Upload**
+8. Restart Outlook
 
-1. Download the `manifest.xml` file
-2. Copy it to:
+### Method 3: Classic Outlook Desktop (Windows)
+
+1. Open **Outlook Desktop**
+2. Go to **Home** tab → **Get Add-ins** (or **Store**)
+3. Click **My add-ins** in the left panel
+4. Click **➕ Add a custom add-in** → **Add from file**
+   - If you see "Add from URL", you can use: `https://David-Summers.github.io/hashfix/manifest.xml`
+5. Browse to the downloaded `manifest.xml` file
+6. Click **Install**
+7. Restart Outlook
+
+### Method 4: Outlook for Mac
+
+1. Download the `manifest.xml` file from: https://David-Summers.github.io/hashfix/manifest.xml
+2. Open **Finder** and press **Cmd+Shift+G** (Go to Folder)
+3. Paste this path:
    ```
    ~/Library/Containers/com.microsoft.Outlook/Data/Documents/wef
    ```
-3. Create the `wef` folder if it doesn't exist
-4. Restart Outlook
+4. Create the `wef` folder if it doesn't exist
+5. Copy `manifest.xml` into the `wef` folder
+6. Restart Outlook
+
+### Method 5: Admin Deployment (For IT Administrators)
+
+Administrators can deploy HashFix organization-wide via:
+
+1. **Microsoft 365 Admin Center**:
+   - Go to **Settings** → **Integrated apps** → **Upload custom apps**
+   - Upload `manifest.xml`
+   - Assign to users/groups
+
+2. **Centralized Deployment**:
+   - Admin Center → **Settings** → **Services & add-ins** → **Deploy Add-in**
+   - Upload the manifest
+   - Configure deployment settings
+
+### Download Manifest File
+
+If you need to download the manifest file manually:
+```
+https://David-Summers.github.io/hashfix/manifest.xml
+```
+
+Right-click and "Save as" or use curl/wget:
+```bash
+curl -O https://David-Summers.github.io/hashfix/manifest.xml
+```
 
 ## Usage
 
