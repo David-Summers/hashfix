@@ -1,1 +1,355 @@
-Hello :)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HashFix Support</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 32px;
+        }
+
+        h2 {
+            color: #333;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 22px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 8px;
+        }
+
+        h3 {
+            color: #555;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        ul, ol {
+            margin-left: 25px;
+            margin-bottom: 15px;
+            color: #666;
+        }
+
+        li {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #d63384;
+        }
+
+        .example-box {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        .info-box {
+            background: #e7f3ff;
+            border-left: 4px solid #0066cc;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        .contact {
+            background: #667eea;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .contact a {
+            color: white;
+            text-decoration: underline;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        table th {
+            background: #667eea;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+
+        table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>HashFix Support & Documentation</h1>
+        <p><strong>Version:</strong> 1.0.0 | <strong>Author:</strong> Mark Robinson</p>
+
+        <h2>What is HashFix?</h2>
+        <p>
+            HashFix is an Outlook add-in that automatically corrects improperly formatted hashtags in your emails before sending.
+            It runs silently in the background and fixes common hashtag formatting mistakes without interrupting your workflow.
+        </p>
+
+        <h2>How It Works</h2>
+        <p>
+            When you click "Send" in Outlook, HashFix automatically scans your email and fixes any hashtag formatting issues.
+            The process is completely automatic and happens in milliseconds.
+        </p>
+
+        <h3>What Gets Fixed?</h3>
+        <table>
+            <tr>
+                <th>Before (Incorrect)</th>
+                <th>After (Fixed)</th>
+            </tr>
+            <tr>
+                <td><code># tag</code></td>
+                <td><code>#tag</code></td>
+            </tr>
+            <tr>
+                <td><code>#  marketing</code> (double space)</td>
+                <td><code>#marketing</code></td>
+            </tr>
+            <tr>
+                <td><code># 2024</code></td>
+                <td><code>#2024</code></td>
+            </tr>
+            <tr>
+                <td><code>#    team</code> (multiple spaces)</td>
+                <td><code>#team</code></td>
+            </tr>
+        </table>
+
+        <h2>Features</h2>
+        <ul>
+            <li><strong>Automatic Correction:</strong> Fixes hashtags without requiring manual intervention</li>
+            <li><strong>OnSend Event:</strong> Runs when you click Send, ensuring all emails are properly formatted</li>
+            <li><strong>Activity Tracking:</strong> View statistics and history in the taskpane</li>
+            <li><strong>HTML-Safe:</strong> Preserves email formatting, links, and styles</li>
+            <li><strong>Soft-Block Mode:</strong> Allows sending even if processing fails (fail-safe)</li>
+        </ul>
+
+        <h2>Installation</h2>
+
+        <h3>For Outlook on the Web (Easiest)</h3>
+        <ol>
+            <li>Open Outlook in your web browser</li>
+            <li>Click the Settings gear icon</li>
+            <li>Select "View all Outlook settings"</li>
+            <li>Go to "Mail" → "Customize actions" → "Get Add-ins"</li>
+            <li>Click "My add-ins" → "Add a custom add-in" → "Add from URL"</li>
+            <li>Enter: <code>https://markarobinson-pixel.github.io/hashfix/manifest.xml</code></li>
+            <li>Click "Install"</li>
+        </ol>
+
+        <h3>For Outlook Desktop (Windows)</h3>
+        <ol>
+            <li>Open Outlook</li>
+            <li>Go to "File" → "Get Add-ins"</li>
+            <li>Select "My add-ins"</li>
+            <li>Click "Add a custom add-in" → "Add from URL"</li>
+            <li>Enter: <code>https://markarobinson-pixel.github.io/hashfix/manifest.xml</code></li>
+            <li>Click "OK" and restart Outlook</li>
+        </ol>
+
+        <div class="info-box">
+            <strong>Note:</strong> HashFix requires Outlook Mailbox API version 1.10 or higher.
+            This is available in modern versions of Outlook (2021+, Outlook on the web, and Microsoft 365).
+        </div>
+
+        <h2>Usage</h2>
+
+        <h3>Automatic Mode (Default)</h3>
+        <p>
+            Simply compose and send emails normally. HashFix will automatically scan and fix hashtags when you click "Send".
+            You don't need to do anything special.
+        </p>
+
+        <h3>Viewing Activity</h3>
+        <ol>
+            <li>In Outlook, compose a new email</li>
+            <li>Click the "HashFix" button in the ribbon</li>
+            <li>The taskpane will open showing:
+                <ul>
+                    <li>Current status</li>
+                    <li>Total fixes applied</li>
+                    <li>Session statistics</li>
+                    <li>Recent activity log</li>
+                </ul>
+            </li>
+        </ol>
+
+        <h2>Troubleshooting</h2>
+
+        <h3>Add-in not appearing in Outlook</h3>
+        <ul>
+            <li>Ensure you're using a supported version of Outlook</li>
+            <li>Try restarting Outlook</li>
+            <li>Check that the manifest URL is correct</li>
+            <li>Verify your internet connection (add-in files are hosted on GitHub Pages)</li>
+        </ul>
+
+        <h3>Hashtags not being fixed</h3>
+        <ul>
+            <li>Check the browser console (F12) for error messages</li>
+            <li>Ensure the add-in is enabled in Outlook settings</li>
+            <li>Verify that Office.js is loading correctly</li>
+            <li>Try sending a test email with <code># test</code> to verify functionality</li>
+        </ul>
+
+        <h3>TaskPane shows "0" fixes but hashtags were fixed</h3>
+        <ul>
+            <li>SessionStorage might have been cleared</li>
+            <li>Click "Refresh Activity" to reload the logs</li>
+            <li>Note: Statistics reset when you close Outlook</li>
+        </ul>
+
+        <div class="warning-box">
+            <strong>Important:</strong> If HashFix encounters an error while processing your email, it will still allow
+            the email to send (fail-safe mode). Check the browser console for any error messages.
+        </div>
+
+        <h2>Privacy & Security</h2>
+        <p>
+            HashFix processes your email content locally in the browser. No email content is sent to external servers.
+            The add-in only:
+        </p>
+        <ul>
+            <li>Reads the email body when you click "Send"</li>
+            <li>Modifies hashtag formatting</li>
+            <li>Stores anonymous statistics in sessionStorage (local only)</li>
+        </ul>
+
+        <h2>Permissions Required</h2>
+        <ul>
+            <li><strong>ReadWriteMailbox:</strong> Required to read and modify email content during the send event</li>
+        </ul>
+
+        <h2>Technical Details</h2>
+
+        <h3>Event-Based Architecture</h3>
+        <p>
+            HashFix uses the Outlook <code>OnMessageSend</code> event with <strong>SoftBlock</strong> mode.
+            This means the add-in runs automatically when you send emails and allows sending even if processing fails.
+        </p>
+
+        <h3>Pattern Matching</h3>
+        <p>
+            The add-in uses the regular expression <code>/#\s+(\w+)/g</code> to find and fix hashtags.
+            This matches a hash symbol followed by one or more spaces, then word characters or numbers.
+        </p>
+
+        <h3>HTML Preservation</h3>
+        <p>
+            HashFix uses DOMParser to safely parse and modify email HTML without breaking formatting,
+            links, images, or other content.
+        </p>
+
+        <h2>Frequently Asked Questions</h2>
+
+        <h3>Does HashFix work with plain text emails?</h3>
+        <p>
+            Yes, HashFix works with both HTML and plain text emails. The add-in reads the email as HTML
+            (which Outlook provides even for plain text) and preserves the format.
+        </p>
+
+        <h3>Can I disable HashFix temporarily?</h3>
+        <p>
+            Yes, you can disable the add-in in Outlook settings:
+        </p>
+        <ul>
+            <li>Go to "Get Add-ins" → "My add-ins"</li>
+            <li>Find "HashFix On-Send" and toggle it off</li>
+        </ul>
+
+        <h3>Does it work in Outlook Mobile?</h3>
+        <p>
+            Currently, OnMessageSend events are not supported in Outlook Mobile. HashFix only works in
+            Outlook Desktop and Outlook on the Web.
+        </p>
+
+        <h3>Can I customize what gets fixed?</h3>
+        <p>
+            The current version focuses on hashtag spacing issues. If you'd like additional functionality,
+            please contact the developer.
+        </p>
+
+        <h2>Version History</h2>
+        <ul>
+            <li><strong>1.0.0</strong> (2025) - Initial release
+                <ul>
+                    <li>Automatic hashtag spacing correction</li>
+                    <li>OnMessageSend event handler</li>
+                    <li>Activity tracking and statistics</li>
+                    <li>Taskpane UI</li>
+                </ul>
+            </li>
+        </ul>
+
+        <div class="contact">
+            <h2 style="color: white; margin-bottom: 10px;">Need Help?</h2>
+            <p>
+                For support, bug reports, or feature requests, please contact:<br>
+                <strong>Mark Robinson</strong><br>
+                <a href="https://github.com/markarobinson-pixel/hashfix">GitHub Repository</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>

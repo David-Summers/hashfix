@@ -2,12 +2,268 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>HashFix Taskpane (Stub)</title>
+  <title>HashFix - Email Hashtag Fixer</title>
   <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
-  <style>html,body{margin:0;padding:0;}</style>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #333;
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    .container {
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    h1 {
+      color: #667eea;
+      font-size: 24px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .subtitle {
+      color: #666;
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+
+    .status-card {
+      background: #f8f9fa;
+      border-left: 4px solid #667eea;
+      padding: 16px;
+      border-radius: 8px;
+      margin-bottom: 24px;
+    }
+
+    .status-card h2 {
+      font-size: 16px;
+      color: #333;
+      margin-bottom: 8px;
+    }
+
+    .status-card p {
+      color: #666;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .stat-box {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 16px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 32px;
+      font-weight: bold;
+      margin-bottom: 4px;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      opacity: 0.9;
+    }
+
+    .logs-section {
+      margin-top: 24px;
+    }
+
+    .logs-section h3 {
+      font-size: 16px;
+      color: #333;
+      margin-bottom: 12px;
+    }
+
+    .log-entry {
+      background: #f8f9fa;
+      padding: 12px;
+      border-radius: 6px;
+      margin-bottom: 8px;
+      font-size: 13px;
+    }
+
+    .log-time {
+      color: #667eea;
+      font-weight: 600;
+    }
+
+    .log-detail {
+      color: #666;
+      margin-top: 4px;
+    }
+
+    .no-logs {
+      text-align: center;
+      color: #999;
+      padding: 24px;
+      font-style: italic;
+    }
+
+    .info-box {
+      background: #e7f3ff;
+      border: 1px solid #b3d9ff;
+      padding: 16px;
+      border-radius: 8px;
+      margin-top: 24px;
+    }
+
+    .info-box h3 {
+      color: #0066cc;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    .info-box ul {
+      margin-left: 20px;
+      color: #333;
+      font-size: 13px;
+    }
+
+    .info-box li {
+      margin-bottom: 4px;
+    }
+
+    .refresh-btn {
+      background: #667eea;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      width: 100%;
+      margin-top: 16px;
+      transition: background 0.3s;
+    }
+
+    .refresh-btn:hover {
+      background: #5568d3;
+    }
+
+    .emoji {
+      font-size: 24px;
+    }
+  </style>
 </head>
 <body>
-  <!-- Minimal/no UI; exists to satisfy legacy SourceLocation expectations -->
-  <script>Office.onReady(()=>{});</script>
+  <div class="container">
+    <h1>
+      <span class="emoji">#</span>
+      HashFix
+    </h1>
+    <p class="subtitle">Automatic hashtag formatting for your emails</p>
+
+    <div class="status-card">
+      <h2>Status: Active</h2>
+      <p>HashFix is monitoring your outgoing emails and will automatically fix improperly formatted hashtags before sending.</p>
+    </div>
+
+    <div class="stats">
+      <div class="stat-box">
+        <div class="stat-number" id="totalFixes">0</div>
+        <div class="stat-label">Total Fixes</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number" id="sessionFixes">0</div>
+        <div class="stat-label">This Session</div>
+      </div>
+    </div>
+
+    <div class="logs-section">
+      <h3>Recent Activity</h3>
+      <div id="logsList"></div>
+    </div>
+
+    <button class="refresh-btn" onclick="refreshLogs()">Refresh Activity</button>
+
+    <div class="info-box">
+      <h3>What HashFix Does:</h3>
+      <ul>
+        <li>Fixes "# tag" → "#tag"</li>
+        <li>Fixes "#  tag" → "#tag" (multiple spaces)</li>
+        <li>Works with numbers: "# 123" → "#123"</li>
+        <li>Preserves email formatting</li>
+        <li>Runs automatically when you send emails</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    let totalFixesCount = 0;
+
+    Office.onReady(() => {
+      loadLogs();
+      // Refresh logs every 5 seconds
+      setInterval(loadLogs, 5000);
+    });
+
+    function loadLogs() {
+      try {
+        const logs = JSON.parse(sessionStorage.getItem('hashfixLogs') || '[]');
+        const logsList = document.getElementById('logsList');
+        const totalFixes = document.getElementById('totalFixes');
+        const sessionFixes = document.getElementById('sessionFixes');
+
+        if (logs.length === 0) {
+          logsList.innerHTML = '<div class="no-logs">No hashtag fixes yet. Send an email with "# tag" to see HashFix in action!</div>';
+          totalFixes.textContent = '0';
+          sessionFixes.textContent = '0';
+          return;
+        }
+
+        // Calculate total fixes
+        const totalCount = logs.reduce((sum, log) => sum + log.fixesApplied, 0);
+        totalFixesCount = totalCount;
+
+        // Update stats
+        totalFixes.textContent = totalCount;
+        sessionFixes.textContent = logs.length;
+
+        // Display recent logs (last 10)
+        const recentLogs = logs.slice(-10).reverse();
+        logsList.innerHTML = recentLogs.map(log => {
+          const date = new Date(log.timestamp);
+          const timeStr = date.toLocaleTimeString();
+          return `
+            <div class="log-entry">
+              <div class="log-time">${timeStr}</div>
+              <div class="log-detail">Fixed ${log.fixesApplied} hashtag${log.fixesApplied !== 1 ? 's' : ''}</div>
+            </div>
+          `;
+        }).join('');
+
+      } catch (error) {
+        console.error('Error loading logs:', error);
+      }
+    }
+
+    function refreshLogs() {
+      loadLogs();
+    }
+  </script>
 </body>
 </html>
