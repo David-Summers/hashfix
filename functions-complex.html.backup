@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>HashFix Runtime</title>
+  <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+</head>
+<body>
+<script>
+  Office.onReady(() => {
+    if (Office.actions && Office.actions.associate) {
+      Office.actions.associate("onMessageSendHandler", onMessageSendHandler);
+    }
+  });
+
+  /**
+   * HashFix OnMessageSend Handler
+   * Automatically fixes hashtag formatting issues before sending email
+   */
+  function onMessageSendHandler(event) {
+    const item = Office.context.mailbox.item;
+
+    // Get the email body and fix hashtags
+    item.body.getAsync(Office.CoercionType.Html, (result) => {
+      if (result.status === Office.AsyncResultStatus.Failed) {
+        console.error("Failed to get email body:", result.error);
+        // Allow send even if we can't check
+        event.completed({ allowEvent: true });
+        return;
+      }
+
+      const originalBody = result.value;
+      const fixedBody = fixHashtags(originalBody);
+
+      // If changes were made, update the body
+      if (fixedBody !== originalBody) {
+        item.body.setAsync(fixedBody, { coercionType: Office.CoercionType.Html }, (setResult) => {
+          if (setResult.status === Office.AsyncResultStatus.Failed) {
+            console.error("Failed to update email body:", setResult.error);
+          } else {
+            console.log("HashFix: Hashtags automatically corrected");
+            logFixToStorage(originalBody, fixedBody);
+          }
+          // Allow send after fixing (or attempting to fix)
+          event.completed({ allowEvent: true });
+        });
+      } else {
+        // No fixes needed, allow send
+        event.completed({ allowEvent: true });
+      }
+    });
+  }
+
+  /**
+   * Fix common hashtag formatting issues
+   * - Removes spaces after # symbol
+   * - Fixes multiple spaces in hashtags
+   * - Preserves HTML structure
+   */
+  function fixHashtags(htmlContent) {
+    // Create a temporary div to parse HTML safely
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(htmlContent, 'text/html');
+
+    // Process all text nodes
+    processTextNodes(doc.body);
+
+    return doc.body.innerHTML;
+  }
+
+  /**
+   * Recursively process text nodes to fix hashtags
+   */
+  function processTextNodes(node) {
+    if (node.nodeType === Node.TEXT_NODE) {
+      // Fix hashtag patterns in text
+      const originalText = node.textContent;
+      const fixedText = fixHashtagText(originalText);
+      if (fixedText !== originalText) {
+        node.textContent = fixedText;
+      }
+    } else {
+      // Recursively process child nodes
+      for (let child of node.childNodes) {
+        processTextNodes(child);
+      }
+    }
+  }
+
+  /**
+   * Fix hashtag patterns in plain text
+   * Patterns fixed:
+   * - "# tag" -> "#tag"
+   * - "#  tag" -> "#tag"
+   * - "# 123" -> "#123"
+   */
+  function fixHashtagText(text) {
+    // Match # followed by one or more spaces, then word characters or numbers
+    // Replace with # immediately followed by the word/number
+    return text.replace(/#\s+(\w+)/g, '#$1');
+  }
+
+  /**
+   * Log fixes to local storage for the taskpane to display
+   */
+  function logFixToStorage(original, fixed) {
+    try {
+      const timestamp = new Date().toISOString();
+      const log = {
+        timestamp: timestamp,
+        fixesApplied: countHashtagFixes(original, fixed)
+      };
+
+      // Store in sessionStorage (persists during Outlook session)
+      const existingLogs = JSON.parse(sessionStorage.getItem('hashfixLogs') || '[]');
+      existingLogs.push(log);
+
+      // Keep only last 50 logs
+      if (existingLogs.length > 50) {
+        existingLogs.shift();
+      }
+
+      sessionStorage.setItem('hashfixLogs', JSON.stringify(existingLogs));
+    } catch (error) {
+      console.error("Failed to log fix:", error);
+    }
+  }
+
+  /**
+   * Count number of hashtag fixes applied
+   */
+  function countHashtagFixes(original, fixed) {
+    const originalMatches = original.match(/#\s+\w+/g) || [];
+    return originalMatches.length;
+  }
+
+  // Make handler globally accessible
+  window.onMessageSendHandler = onMessageSendHandler;
+</script>
+</body>
+</html>
