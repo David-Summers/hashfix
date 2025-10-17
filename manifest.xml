@@ -46,51 +46,52 @@
     <Rule xsi:type="ItemIs" ItemType="Message" FormType="Read"/>
   </Rule>
 
+  <DisableEntityHighlighting>true</DisableEntityHighlighting>
+
   <!-- VersionOverrides for LaunchEvent -->
-  <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides" xsi:type="VersionOverridesV1_0">
-    <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.1" xsi:type="VersionOverridesV1_1">
+  <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides" xsi:type="VersionOverridesV1_1">
 
-      <Requirements>
-        <bt:Sets DefaultMinVersion="1.10">
-          <bt:Set Name="Mailbox"/>
-        </bt:Sets>
-      </Requirements>
+    <Description resid="groupLabel"/>
 
-      <Hosts>
-        <Host xsi:type="MailHost">
+    <Requirements>
+      <bt:Sets DefaultMinVersion="1.10">
+        <bt:Set Name="Mailbox"/>
+      </bt:Sets>
+    </Requirements>
 
-          <DesktopFormFactor>
-            <FunctionFile resid="funcFile"/>
+    <Hosts>
+      <Host xsi:type="MailHost">
 
-            <ExtensionPoint xsi:type="LaunchEvent">
-              <LaunchEvents>
-                <LaunchEvent Type="OnMessageSend" FunctionName="onMessageSendHandler" SendMode="SoftBlock"/>
-              </LaunchEvents>
-              <SourceLocation resid="funcFile"/>
-            </ExtensionPoint>
+        <DesktopFormFactor>
+          <FunctionFile resid="funcFile"/>
 
-          </DesktopFormFactor>
+          <ExtensionPoint xsi:type="LaunchEvent">
+            <LaunchEvents>
+              <LaunchEvent Type="OnMessageSend" FunctionName="onMessageSendHandler" SendMode="SoftBlock"/>
+            </LaunchEvents>
+            <SourceLocation resid="funcFile"/>
+          </ExtensionPoint>
 
-        </Host>
-      </Hosts>
+        </DesktopFormFactor>
 
-      <Resources>
-        <bt:Images>
-          <bt:Image id="icon16" DefaultValue="https://David-Summers.github.io/hashfix/icon-16.png"/>
-          <bt:Image id="icon32" DefaultValue="https://David-Summers.github.io/hashfix/icon-32.png"/>
-          <bt:Image id="icon64" DefaultValue="https://David-Summers.github.io/hashfix/icon-64.png"/>
-          <bt:Image id="icon80" DefaultValue="https://David-Summers.github.io/hashfix/icon-80.png"/>
-        </bt:Images>
-        <bt:Urls>
-          <bt:Url id="funcFile" DefaultValue="https://David-Summers.github.io/hashfix/functions.html"/>
-        </bt:Urls>
-        <bt:ShortStrings>
-          <bt:String id="groupLabel" DefaultValue="HashFix"/>
-        </bt:ShortStrings>
-        <bt:LongStrings/>
-      </Resources>
+      </Host>
+    </Hosts>
 
-    </VersionOverrides>
+    <Resources>
+      <bt:Images>
+        <bt:Image id="icon16" DefaultValue="https://David-Summers.github.io/hashfix/icon-16.png"/>
+        <bt:Image id="icon32" DefaultValue="https://David-Summers.github.io/hashfix/icon-32.png"/>
+        <bt:Image id="icon64" DefaultValue="https://David-Summers.github.io/hashfix/icon-64.png"/>
+        <bt:Image id="icon80" DefaultValue="https://David-Summers.github.io/hashfix/icon-80.png"/>
+      </bt:Images>
+      <bt:Urls>
+        <bt:Url id="funcFile" DefaultValue="https://David-Summers.github.io/hashfix/functions.html"/>
+      </bt:Urls>
+      <bt:ShortStrings>
+        <bt:String id="groupLabel" DefaultValue="HashFix"/>
+      </bt:ShortStrings>
+    </Resources>
+
   </VersionOverrides>
 
 </OfficeApp>
