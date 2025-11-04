@@ -11,7 +11,7 @@
   <ProviderName>Mark Robinson</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="HashFix"/>
-  <Description DefaultValue="Automatically fixes hashtag formatting in emails"/>
+  <Description DefaultValue="Fix hashtag formatting in your emails with one click"/>
 
   <IconUrl DefaultValue="https://David-Summers.github.io/hashfix/icon-32.png"/>
   <HighResolutionIconUrl DefaultValue="https://David-Summers.github.io/hashfix/icon-64.png"/>
@@ -40,13 +40,13 @@
     </Form>
   </FormSettings>
 
-  <Permissions>ReadWriteMailbox</Permissions>
+  <Permissions>ReadWriteItem</Permissions>
 
   <Rule xsi:type="RuleCollection" Mode="Or">
     <Rule xsi:type="ItemIs" ItemType="Message" FormType="Read"/>
   </Rule>
 
-  <!-- VersionOverrides for UI and LaunchEvent -->
+  <!-- VersionOverrides for UI Buttons -->
   <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides" xsi:type="VersionOverridesV1_0">
     <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.1" xsi:type="VersionOverridesV1_1">
 
@@ -60,9 +60,7 @@
         <Host xsi:type="MailHost">
 
           <DesktopFormFactor>
-            <FunctionFile resid="funcFile"/>
-
-            <!-- Add ribbon button for Message Compose -->
+            <!-- Ribbon button for Message Compose -->
             <ExtensionPoint xsi:type="MessageComposeCommandSurface">
               <OfficeTab id="TabDefault">
                 <Group id="msgComposeGroup">
@@ -86,7 +84,7 @@
               </OfficeTab>
             </ExtensionPoint>
 
-            <!-- Add ribbon button for Message Read -->
+            <!-- Ribbon button for Message Read -->
             <ExtensionPoint xsi:type="MessageReadCommandSurface">
               <OfficeTab id="TabDefault">
                 <Group id="msgReadGroup">
@@ -110,14 +108,6 @@
               </OfficeTab>
             </ExtensionPoint>
 
-            <!-- LaunchEvent for OnSend (may be disabled by admin) -->
-            <ExtensionPoint xsi:type="LaunchEvent">
-              <LaunchEvents>
-                <LaunchEvent Type="OnMessageSend" FunctionName="onMessageSendHandler" SendMode="SoftBlock"/>
-              </LaunchEvents>
-              <SourceLocation resid="funcFile"/>
-            </ExtensionPoint>
-
           </DesktopFormFactor>
 
         </Host>
@@ -131,7 +121,6 @@
           <bt:Image id="icon80" DefaultValue="https://David-Summers.github.io/hashfix/icon-80.png"/>
         </bt:Images>
         <bt:Urls>
-          <bt:Url id="funcFile" DefaultValue="https://David-Summers.github.io/hashfix/functions.html"/>
           <bt:Url id="taskpaneUrl" DefaultValue="https://David-Summers.github.io/hashfix/taskpane.html"/>
         </bt:Urls>
         <bt:ShortStrings>
