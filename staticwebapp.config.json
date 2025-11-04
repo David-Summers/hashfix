@@ -1,0 +1,24 @@
+{
+  "globalHeaders": {
+    "content-security-policy": "frame-ancestors https://*.office.com https://*.office365.com https://*.officeapps.live.com https://outlook.office.com https://outlook.office365.com https://outlook.live.com;",
+    "access-control-allow-origin": "*"
+  },
+  "navigationFallback": {
+    "rewrite": "/index.html",
+    "exclude": [
+      "*.{css,scss,js,png,gif,ico,jpg,svg,json,xml,html,woff,woff2,ttf,eot}"
+    ]
+  },
+  "mimeTypes": {
+    ".json": "application/json",
+    ".xml": "application/xml",
+    ".html": "text/html",
+    ".css": "text/css",
+    ".js": "application/javascript",
+    ".png": "image/png",
+    ".jpg": "image/jpeg",
+    ".gif": "image/gif",
+    ".ico": "image/x-icon",
+    ".svg": "image/svg+xml"
+  }
+}
