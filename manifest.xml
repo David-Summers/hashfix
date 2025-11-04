@@ -7,7 +7,7 @@
 
   <!-- Basic Information -->
   <Id>3b2e0b2b-7a29-4c7e-9f7a-4b9b0c6c4d21</Id>
-  <Version>1.0.0.0</Version>
+  <Version>2.0.0.0</Version>
   <ProviderName>Mark Robinson</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="HashFix"/>
