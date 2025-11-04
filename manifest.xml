@@ -26,8 +26,8 @@
   </Hosts>
 
   <Requirements>
-    <Sets DefaultMinVersion="1.10">
-      <Set Name="Mailbox" MinVersion="1.10"/>
+    <Sets DefaultMinVersion="1.5">
+      <Set Name="Mailbox" MinVersion="1.5"/>
     </Sets>
   </Requirements>
 
@@ -46,12 +46,12 @@
     <Rule xsi:type="ItemIs" ItemType="Message" FormType="Read"/>
   </Rule>
 
-  <!-- VersionOverrides for LaunchEvent -->
+  <!-- VersionOverrides for UI and LaunchEvent -->
   <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides" xsi:type="VersionOverridesV1_0">
     <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.1" xsi:type="VersionOverridesV1_1">
 
       <Requirements>
-        <bt:Sets DefaultMinVersion="1.10">
+        <bt:Sets DefaultMinVersion="1.5">
           <bt:Set Name="Mailbox"/>
         </bt:Sets>
       </Requirements>
@@ -62,6 +62,55 @@
           <DesktopFormFactor>
             <FunctionFile resid="funcFile"/>
 
+            <!-- Add ribbon button for Message Compose -->
+            <ExtensionPoint xsi:type="MessageComposeCommandSurface">
+              <OfficeTab id="TabDefault">
+                <Group id="msgComposeGroup">
+                  <Label resid="groupLabel"/>
+                  <Control xsi:type="Button" id="msgComposeOpenPaneButton">
+                    <Label resid="taskpaneButtonLabel"/>
+                    <Supertip>
+                      <Title resid="taskpaneButtonLabel"/>
+                      <Description resid="taskpaneButtonTooltip"/>
+                    </Supertip>
+                    <Icon>
+                      <bt:Image size="16" resid="icon16"/>
+                      <bt:Image size="32" resid="icon32"/>
+                      <bt:Image size="80" resid="icon80"/>
+                    </Icon>
+                    <Action xsi:type="ShowTaskpane">
+                      <SourceLocation resid="taskpaneUrl"/>
+                    </Action>
+                  </Control>
+                </Group>
+              </OfficeTab>
+            </ExtensionPoint>
+
+            <!-- Add ribbon button for Message Read -->
+            <ExtensionPoint xsi:type="MessageReadCommandSurface">
+              <OfficeTab id="TabDefault">
+                <Group id="msgReadGroup">
+                  <Label resid="groupLabel"/>
+                  <Control xsi:type="Button" id="msgReadOpenPaneButton">
+                    <Label resid="taskpaneButtonLabel"/>
+                    <Supertip>
+                      <Title resid="taskpaneButtonLabel"/>
+                      <Description resid="taskpaneButtonTooltip"/>
+                    </Supertip>
+                    <Icon>
+                      <bt:Image size="16" resid="icon16"/>
+                      <bt:Image size="32" resid="icon32"/>
+                      <bt:Image size="80" resid="icon80"/>
+                    </Icon>
+                    <Action xsi:type="ShowTaskpane">
+                      <SourceLocation resid="taskpaneUrl"/>
+                    </Action>
+                  </Control>
+                </Group>
+              </OfficeTab>
+            </ExtensionPoint>
+
+            <!-- LaunchEvent for OnSend (may be disabled by admin) -->
             <ExtensionPoint xsi:type="LaunchEvent">
               <LaunchEvents>
                 <LaunchEvent Type="OnMessageSend" FunctionName="onMessageSendHandler" SendMode="SoftBlock"/>
@@ -83,11 +132,15 @@
         </bt:Images>
         <bt:Urls>
           <bt:Url id="funcFile" DefaultValue="https://David-Summers.github.io/hashfix/functions.html"/>
+          <bt:Url id="taskpaneUrl" DefaultValue="https://David-Summers.github.io/hashfix/taskpane.html"/>
         </bt:Urls>
         <bt:ShortStrings>
           <bt:String id="groupLabel" DefaultValue="HashFix"/>
+          <bt:String id="taskpaneButtonLabel" DefaultValue="HashFix"/>
         </bt:ShortStrings>
-        <bt:LongStrings/>
+        <bt:LongStrings>
+          <bt:String id="taskpaneButtonTooltip" DefaultValue="Fix hashtag formatting in your emails"/>
+        </bt:LongStrings>
       </Resources>
 
     </VersionOverrides>
