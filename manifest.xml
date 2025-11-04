@@ -5,7 +5,7 @@
            xsi:type="MailApp">
 
   <Id>3b2e0b2b-7a29-4c7e-9f7a-4b9b0c6c4d21</Id>
-  <Version>2.1.0.0</Version>
+  <Version>2.2.0.0</Version>
   <ProviderName>Mark Robinson</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="HashFix"/>
@@ -38,79 +38,81 @@
     <Rule xsi:type="ItemIs" ItemType="Message" FormType="Compose"/>
   </Rule>
 
-  <!-- Single VersionOverrides V1_1 -->
-  <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.1"
-                    xsi:type="VersionOverridesV1_1">
+  <!-- VersionOverrides with V1_0 wrapper and V1_1 -->
+  <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides" xsi:type="VersionOverridesV1_0">
+    <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.1" xsi:type="VersionOverridesV1_1">
 
-    <Requirements>
-      <bt:Sets DefaultMinVersion="1.10">
-        <bt:Set Name="Mailbox"/>
-      </bt:Sets>
-    </Requirements>
+      <Requirements>
+        <bt:Sets DefaultMinVersion="1.10">
+          <bt:Set Name="Mailbox"/>
+        </bt:Sets>
+      </Requirements>
 
-    <Hosts>
-      <Host xsi:type="MailHost">
-        <DesktopFormFactor>
+      <Hosts>
+        <Host xsi:type="MailHost">
+          <DesktopFormFactor>
+            <FunctionFile resid="funcFile"/>
 
-          <!-- Ribbon command in compose -->
-          <ExtensionPoint xsi:type="MessageComposeCommandSurface">
-            <OfficeTab id="TabDefault">
-              <Group id="msgComposeGroup">
-                <Label resid="groupLabel"/>
-                <Control xsi:type="Button" id="msgComposeOpenPaneButton">
-                  <Label resid="taskpaneButtonLabel"/>
-                  <Supertip>
-                    <Title resid="taskpaneButtonLabel"/>
-                    <Description resid="taskpaneButtonTooltip"/>
-                  </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="icon16"/>
-                    <bt:Image size="32" resid="icon32"/>
-                    <bt:Image size="80" resid="icon80"/>
-                  </Icon>
-                  <Action xsi:type="ShowTaskpane">
-                    <TaskpaneId>MsgCompose</TaskpaneId>
-                    <SourceLocation resid="taskpaneUrl"/>
-                  </Action>
-                </Control>
-              </Group>
-            </OfficeTab>
+            <!-- Ribbon command in compose -->
+            <ExtensionPoint xsi:type="MessageComposeCommandSurface">
+              <OfficeTab id="TabDefault">
+                <Group id="msgComposeGroup">
+                  <Label resid="groupLabel"/>
+                  <Control xsi:type="Button" id="msgComposeOpenPaneButton">
+                    <Label resid="taskpaneButtonLabel"/>
+                    <Supertip>
+                      <Title resid="taskpaneButtonLabel"/>
+                      <Description resid="taskpaneButtonTooltip"/>
+                    </Supertip>
+                    <Icon>
+                      <bt:Image size="16" resid="icon16"/>
+                      <bt:Image size="32" resid="icon32"/>
+                      <bt:Image size="80" resid="icon80"/>
+                    </Icon>
+                    <Action xsi:type="ShowTaskpane">
+                      <TaskpaneId>MsgCompose</TaskpaneId>
+                      <SourceLocation resid="taskpaneUrl"/>
+                    </Action>
+                  </Control>
+                </Group>
+              </OfficeTab>
+            </ExtensionPoint>
 
-            <!-- Launch events -->
-            <LaunchEvents>
-              <LaunchEvent Type="OnMessageSend"
-                           FunctionName="onMessageSendHandler"
-                           SendMode="SoftBlock"/>
-            </LaunchEvents>
+            <!-- LaunchEvent for OnMessageSend -->
+            <ExtensionPoint xsi:type="LaunchEvent">
+              <LaunchEvents>
+                <LaunchEvent Type="OnMessageSend"
+                             FunctionName="onMessageSendHandler"
+                             SendMode="SoftBlock"/>
+              </LaunchEvents>
+              <SourceLocation resid="funcFile"/>
+            </ExtensionPoint>
 
-            <!-- Function file that loads Office.js and associates the handler -->
-            <SourceLocation resid="funcFile"/>
-          </ExtensionPoint>
+          </DesktopFormFactor>
+        </Host>
+      </Hosts>
 
-        </DesktopFormFactor>
-      </Host>
-    </Hosts>
+      <Resources>
+        <bt:Images>
+          <bt:Image id="icon16" DefaultValue="https://hashfixaddin.z20.web.core.windows.net/icon-16.png"/>
+          <bt:Image id="icon32" DefaultValue="https://hashfixaddin.z20.web.core.windows.net/icon-32.png"/>
+          <bt:Image id="icon64" DefaultValue="https://hashfixaddin.z20.web.core.windows.net/icon-64.png"/>
+          <bt:Image id="icon80" DefaultValue="https://hashfixaddin.z20.web.core.windows.net/icon-80.png"/>
+        </bt:Images>
+        <bt:Urls>
+          <!-- functions.html embeds the event handler code -->
+          <bt:Url id="funcFile" DefaultValue="https://hashfixaddin.z20.web.core.windows.net/functions.html"/>
+          <bt:Url id="taskpaneUrl" DefaultValue="https://hashfixaddin.z20.web.core.windows.net/taskpane.html"/>
+        </bt:Urls>
+        <bt:ShortStrings>
+          <bt:String id="groupLabel" DefaultValue="HashFix"/>
+          <bt:String id="taskpaneButtonLabel" DefaultValue="HashFix"/>
+        </bt:ShortStrings>
+        <bt:LongStrings>
+          <bt:String id="taskpaneButtonTooltip" DefaultValue="Fix hashtag formatting in your emails"/>
+        </bt:LongStrings>
+      </Resources>
 
-    <Resources>
-      <bt:Images>
-        <bt:Image id="icon16" DefaultValue="https://hashfixaddin.z20.web.core.windows.net/icon-16.png"/>
-        <bt:Image id="icon32" DefaultValue="https://hashfixaddin.z20.web.core.windows.net/icon-32.png"/>
-        <bt:Image id="icon64" DefaultValue="https://hashfixaddin.z20.web.core.windows.net/icon-64.png"/>
-        <bt:Image id="icon80" DefaultValue="https://hashfixaddin.z20.web.core.windows.net/icon-80.png"/>
-      </bt:Images>
-      <bt:Urls>
-        <!-- functions.html embeds the event handler code -->
-        <bt:Url id="funcFile" DefaultValue="https://hashfixaddin.z20.web.core.windows.net/functions.html"/>
-        <bt:Url id="taskpaneUrl" DefaultValue="https://hashfixaddin.z20.web.core.windows.net/taskpane.html"/>
-      </bt:Urls>
-      <bt:ShortStrings>
-        <bt:String id="groupLabel" DefaultValue="HashFix"/>
-        <bt:String id="taskpaneButtonLabel" DefaultValue="HashFix"/>
-      </bt:ShortStrings>
-      <bt:LongStrings>
-        <bt:String id="taskpaneButtonTooltip" DefaultValue="Fix hashtag formatting in your emails"/>
-      </bt:LongStrings>
-    </Resources>
-
+    </VersionOverrides>
   </VersionOverrides>
 </OfficeApp>
