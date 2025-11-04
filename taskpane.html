@@ -179,8 +179,10 @@
 
     <div class="status-card">
       <h2>Status: Active</h2>
-      <p>HashFix is monitoring your outgoing emails and will automatically fix improperly formatted hashtags before sending.</p>
+      <p>HashFix automatically converts "Data#3" to "Data<sup>#</sup>3" (with superscript #) when you send emails.</p>
     </div>
+
+    <button class="refresh-btn" onclick="fixCurrentEmail()" style="margin-bottom: 24px;">Fix Data#3 in Current Email</button>
 
     <div class="stats">
       <div class="stat-box">
@@ -203,11 +205,11 @@
     <div class="info-box">
       <h3>What HashFix Does:</h3>
       <ul>
-        <li>Fixes "# tag" → "#tag"</li>
-        <li>Fixes "#  tag" → "#tag" (multiple spaces)</li>
-        <li>Works with numbers: "# 123" → "#123"</li>
-        <li>Preserves email formatting</li>
+        <li>Automatically formats "Data#3" with superscript #</li>
+        <li>Converts: Data#3 → Data<sup>#</sup>3</li>
         <li>Runs automatically when you send emails</li>
+        <li>Or click button above to fix current email manually</li>
+        <li>Preserves all other email formatting</li>
       </ul>
     </div>
   </div>
@@ -263,6 +265,30 @@
 
     function refreshLogs() {
       loadLogs();
+    }
+
+    function fixCurrentEmail() {
+      Office.context.mailbox.item.body.getAsync(Office.CoercionType.Html, function(result) {
+        if (result.status === Office.AsyncResultStatus.Failed) {
+          alert('Failed to get email content');
+          return;
+        }
+
+        const originalHtml = result.value;
+        const fixedHtml = originalHtml.replace(/Data#3(?!<\/sup>)/gi, 'Data<sup>#</sup>3');
+
+        if (fixedHtml !== originalHtml) {
+          Office.context.mailbox.item.body.setAsync(fixedHtml, { coercionType: Office.CoercionType.Html }, function(setResult) {
+            if (setResult.status === Office.AsyncResultStatus.Succeeded) {
+              alert('✓ Data#3 formatted with superscript #');
+            } else {
+              alert('Failed to update email');
+            }
+          });
+        } else {
+          alert('No Data#3 found in this email');
+        }
+      });
     }
   </script>
 </body>

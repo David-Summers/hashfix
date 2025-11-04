@@ -30,35 +30,39 @@
 
       const item = Office.context.mailbox.item;
 
-      item.body.getAsync(Office.CoercionType.Text, function(result) {
+      // Get HTML body to apply superscript formatting
+      item.body.getAsync(Office.CoercionType.Html, function(result) {
         if (result.status === Office.AsyncResultStatus.Failed) {
           console.error("HashFix: Failed to get body", result.error);
           event.completed({ allowEvent: true });
           return;
         }
 
-        const originalText = result.value;
-        const fixedText = fixHashtagsSimple(originalText);
+        const originalHtml = result.value;
+        const fixedHtml = fixData3Superscript(originalHtml);
 
-        if (fixedText !== originalText) {
-          item.body.setAsync(fixedText, { coercionType: Office.CoercionType.Text }, function(setResult) {
+        if (fixedHtml !== originalHtml) {
+          item.body.setAsync(fixedHtml, { coercionType: Office.CoercionType.Html }, function(setResult) {
             if (setResult.status === Office.AsyncResultStatus.Succeeded) {
-              console.log("HashFix: Hashtags corrected");
+              console.log("HashFix: Data#3 formatted with superscript #");
             } else {
               console.error("HashFix: Failed to set body", setResult.error);
             }
             event.completed({ allowEvent: true });
           });
         } else {
-          console.log("HashFix: No changes needed");
+          console.log("HashFix: No Data#3 found to format");
           event.completed({ allowEvent: true });
         }
       });
     }
 
-    // Regex-based hashtag fixer
-    function fixHashtagsSimple(text) {
-      return text.replace(/#\s+(\w+)/g, '#$1');
+    // Convert Data#3 to Data with superscript #
+    function fixData3Superscript(html) {
+      // Replace Data#3 with Data<sup>#</sup>3
+      // Need to handle both plain text and already-formatted cases
+      // Match Data#3 but not Data<sup>#</sup>3
+      return html.replace(/Data#3(?!<\/sup>)/gi, 'Data<sup>#</sup>3');
     }
 
     // Global exposure
